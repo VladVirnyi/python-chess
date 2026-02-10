@@ -1,0 +1,30 @@
+/* Головне вікно */
+QMainWindow {
+    background-color: #1a1a1a;
+}
+
+/* Наш віджет з шахами */
+ChessWidget {
+    background-color: #242424;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Якщо додаси кнопки керування */
+#historyButton {
+    background-color: #3d3d3d;
+    color: #eeeeee;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #4d4d4d;
+}
+
+QPushButton:pressed {
+    background-color: #2d2d2d;
+}

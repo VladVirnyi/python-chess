@@ -1,10 +1,13 @@
 import chess
 import chess.svg # graphic board
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QInputDialog # for .svg
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QInputDialog, QHBoxLayout # for .svg
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtCore import Qt
 from game.game_state import GameState
+from ui.history_button import HistoryButton
+from ui.history_panel import HistoryPanel
+
 
 # gui idea
 class ChessWidget(QWidget): 
@@ -12,7 +15,7 @@ class ChessWidget(QWidget):
         super().__init__()
 
         self.setWindowTitle("Chess Widget")
-        self.setFixedSize(420, 420)
+        self.setFixedSize(700, 700)
 
         self.selected_square = None
         self.game = GameState()
@@ -20,12 +23,28 @@ class ChessWidget(QWidget):
         self.svg_widget = QSvgWidget()
         self.svg_widget.setFixedSize(400, 400)
         self.svg_widget.mousePressEvent = self.on_click # .svg board
+        self.history_button = HistoryButton()
+        self.history_panel = HistoryPanel()
+        self.history_button.toggled.connect(self.toggle_history)
 
         self.update_board()
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.svg_widget)
-        self.setLayout(layout)
+        # history button
+        layoutH = QHBoxLayout()
+        layoutH.addWidget(self.history_button)
+        layoutH.addStretch()
+        self.history_button.setFixedSize(120, 30)
+
+        # chess board
+        layoutV = QVBoxLayout()
+        layoutV.addLayout(layoutH)
+        layoutV.addWidget(self.svg_widget)
+
+        main_layout = QHBoxLayout()
+        main_layout.addWidget(self.svg_widget)
+        main_layout.addWidget(self.history_panel)
+        
+        self.setLayout(main_layout)
 
     def update_board(self):
         highlight_squares = []
@@ -51,6 +70,10 @@ class ChessWidget(QWidget):
 
         self.svg_widget.load(bytearray(svg_data, encoding="utf-8"))
         self.update_status()
+
+    def toggle_history(self, checked):
+        self.history_button.setVisible(checked)
+
 
     def update_status(self):
         status = self.game.status()
@@ -96,6 +119,7 @@ class ChessWidget(QWidget):
             else:
                 self.game.make_move(from_sq, to_sq)
 
+            self.history_panel.update_history(self.game.board)
             self.update_board()
 
     def get_promotion_piece(self): # promotion ui. For now its just new window open up. Gonna improve it.

@@ -4,10 +4,21 @@ from PySide6.QtWidgets import QApplication
 from ui.chess_widget import ChessWidget
 
 
-app = QApplication(sys.argv) # create application
-window = ChessWidget()
-window.show()
-sys.exit(app.exec())
+
+def main():
+    app = QApplication(sys.argv)
+    
+    try:
+        with open("style.qss", "r") as f:
+            style = f.read()
+            app.setStyleSheet(style)
+    except FileNotFoundError:
+        print("Style file not found.")
+
+    window = ChessWidget()
+    window.show()
+    
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
