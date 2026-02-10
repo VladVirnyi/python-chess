@@ -41,7 +41,7 @@ class ChessWidget(QWidget):
         layoutV.addWidget(self.svg_widget)
 
         main_layout = QHBoxLayout()
-        main_layout.addWidget(self.svg_widget)
+        main_layout.addLayout(layoutV)
         main_layout.addWidget(self.history_panel)
         
         self.setLayout(main_layout)
@@ -72,7 +72,7 @@ class ChessWidget(QWidget):
         self.update_status()
 
     def toggle_history(self, checked):
-        self.history_button.setVisible(checked)
+        self.history_panel.setVisible(checked)
 
 
     def update_status(self):

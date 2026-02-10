@@ -1,9 +1,7 @@
-/* Головне вікно */
 QMainWindow {
     background-color: #1a1a1a;
 }
 
-/* Наш віджет з шахами */
 ChessWidget {
     background-color: #242424;
     border: 1px solid #3a3a3a;
@@ -11,7 +9,6 @@ ChessWidget {
     padding: 10px;
 }
 
-/* Якщо додаси кнопки керування */
 #historyButton {
     background-color: #3d3d3d;
     color: #eeeeee;
