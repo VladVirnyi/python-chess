@@ -15,7 +15,7 @@ class ChessWidget(QWidget):
         super().__init__()
 
         self.setWindowTitle("Chess Widget")
-        self.setFixedSize(700, 700)
+        self.setFixedSize(700, 500)
 
         self.selected_square = None
         self.game = GameState()
@@ -50,6 +50,10 @@ class ChessWidget(QWidget):
         highlight_squares = []
         fill = {}
 
+        if self.game.board.is_check():
+            self.king_square = self.game.board.king(self.game.board.turn) # get king square for check highlight
+            fill[self.king_square] = "#ff0000"
+
         if self.selected_square is not None:
             for move in self.game.board.legal_moves:
                 if move.from_square == self.selected_square:
@@ -69,11 +73,12 @@ class ChessWidget(QWidget):
         )
 
         self.svg_widget.load(bytearray(svg_data, encoding="utf-8"))
+
         self.update_status()
 
     def toggle_history(self, checked):
         self.history_panel.setVisible(checked)
-
+        self.setFixedWidth(700 if checked else 450)
 
     def update_status(self):
         status = self.game.status()
