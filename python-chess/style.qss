@@ -9,19 +9,7 @@ ChessWidget {
     padding: 10px;
 }
 
-#historyButton {
-    background-color: #3d3d3d;
-    color: #eeeeee;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-weight: bold;
-}
 
-QPushButton:hover {
-    background-color: #4d4d4d;
-}
-
-QPushButton:pressed {
-    background-color: #2d2d2d;
+QPushButton:checked {
+    background-color: #e0b232;
 }

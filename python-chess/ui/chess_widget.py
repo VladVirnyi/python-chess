@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QInputDialog, QHBoxLayout # 
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtCore import Qt
 from game.game_state import GameState
-from ui.history_button import HistoryButton
+from ui.buttons import HistoryButton, MicroModeButton
 from ui.history_panel import HistoryPanel
 
 
@@ -14,6 +14,7 @@ class ChessWidget(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.micro_mode = False
         self.setWindowTitle("Chess Widget")
         self.setFixedSize(700, 500)
 
@@ -26,6 +27,8 @@ class ChessWidget(QWidget):
         self.history_button = HistoryButton()
         self.history_panel = HistoryPanel()
         self.history_button.toggled.connect(self.toggle_history)
+        self.micro_mode_button = MicroModeButton(self)
+        self.micro_mode_button.toggled.connect(self.toggle_micro_mode)
 
         self.update_board()
 
@@ -33,7 +36,8 @@ class ChessWidget(QWidget):
         layoutH = QHBoxLayout()
         layoutH.addWidget(self.history_button)
         layoutH.addStretch()
-        self.history_button.setFixedSize(120, 30)
+        layoutH.addWidget(self.micro_mode_button)
+        layoutH.addStretch()
 
         # chess board
         layoutV = QVBoxLayout()
@@ -151,3 +155,23 @@ class ChessWidget(QWidget):
         if 0 <= file <= 7 and 0 <= rank <= 7:
             return chess.square(file, rank)
         return None
+
+    # Micro mode. Will be improved.
+    def toggle_micro_mode(self):
+        self.micro_mode = not self.micro_mode
+        self.apply_window_mode()
+
+    def apply_window_mode(self):
+        if self.micro_mode:
+            self.setWindowFlags(
+            Qt.FramelessWindowHint |
+            Qt.WindowStaysOnTopHint
+        )
+            self.setFixedSize(360, 360)
+            self.history_panel.hide()
+        else:
+            self.setWindowFlags(Qt.Window)
+            self.setMinimumSize(900, 600)
+            self.history_panel.show()
+
+        self.show()
