@@ -16,7 +16,7 @@ class IconButton(QPushButton): # parent button
 class HistoryButton(IconButton): # button for history panel
     def __init__(self, parent=None):
         super().__init__(
-            icon_path="assets/history_icon.png",
+            icon_path="python-chess/ui/assets/icons/history_icon.svg",
             tooltip="Show/hide moves history panel",
             checkable=True
         )
@@ -25,7 +25,7 @@ class HistoryButton(IconButton): # button for history panel
 class MicroModeButton(IconButton): # button for micro mode, no history panel.
     def __init__(self, parent):
         super().__init__(
-            icon_path="assets/icons/micro.svg",
+            icon_path="python-chess/ui/assets/icons/micro.svg",
             tooltip="Micro mode",
             checkable=True
         )
