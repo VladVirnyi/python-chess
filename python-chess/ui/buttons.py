@@ -15,7 +15,11 @@ class IconButton(QPushButton): # parent button
 
 class HistoryButton(IconButton): # button for history panel
     def __init__(self, parent=None):
-        super().__init__("assets/history_icon.png",tooltip="Show/hide moves history panel", checkable=True)
+        super().__init__(
+            icon_path="assets/history_icon.png",
+            tooltip="Show/hide moves history panel",
+            checkable=True
+        )
         self.setObjectName("historyButton")
 
 class MicroModeButton(IconButton): # button for micro mode, no history panel.

@@ -16,11 +16,12 @@ class ChessWidget(QWidget):
 
         self.micro_mode = False
         self.setWindowTitle("Chess Widget")
-        self.setFixedSize(700, 500)
+        self.setMinimumSize(700, 500)
 
         self.selected_square = None
         self.game = GameState()
-
+        
+        self.is_micro = False
         self.svg_widget = QSvgWidget()
         self.svg_widget.setFixedSize(400, 400)
         self.svg_widget.mousePressEvent = self.on_click # .svg board
@@ -157,21 +158,30 @@ class ChessWidget(QWidget):
         return None
 
     # Micro mode. Will be improved.
-    def toggle_micro_mode(self):
-        self.micro_mode = not self.micro_mode
-        self.apply_window_mode()
+    def toggle_micro_mode(self, checked):
+        self.setUpdatesEnabled(False)
 
-    def apply_window_mode(self):
-        if self.micro_mode:
-            self.setWindowFlags(
-            Qt.FramelessWindowHint |
-            Qt.WindowStaysOnTopHint
-        )
-            self.setFixedSize(360, 360)
+        if checked:
+            self.is_micro = True
             self.history_panel.hide()
-        else:
-            self.setWindowFlags(Qt.Window)
-            self.setMinimumSize(900, 600)
-            self.history_panel.show()
+            self.history_button.setFixedSize(30, 30)
+            self.micro_mode_button.setFixedSize(30, 30)
 
-        self.show()
+            self.setMinimumSize (0, 0)
+
+            self.setMinimumSize(410, 410)
+            self.adjustSize()
+
+        else:
+            self.setMinimumSize(700, 500)
+            self.setMaximumSize(16777215, 16777215)
+            
+            self.history_panel.show()
+            self.history_button.setFixedSize(120, 30)
+            self.micro_mode_button.setFixedSize(120, 30)
+            
+            self.resize(700, 500)
+        
+        self.setUpdatesEnabled(True) 
+
+
