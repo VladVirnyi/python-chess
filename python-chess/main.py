@@ -9,7 +9,7 @@ def main():
     app = QApplication(sys.argv)
     
     try:
-        with open("style.qss", "r") as f:
+        with open("python-chess/style.qss", "r") as f:
             style = f.read()
             app.setStyleSheet(style)
     except FileNotFoundError:
